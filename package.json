@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/toml-services-section",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Proof-path section for TOML flatfile serialization.",
   "exports": {
@@ -11,7 +11,14 @@
     "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
-    "smol-toml": "https://registry.npmjs.org/smol-toml/-/smol-toml-1.9.0.tgz",
-    "@red-cup-engineering/json-services-section": "workspace:*"
-  }
+    "smol-toml": "1.9.0",
+    "@red-cup-engineering/json-services-section": "0.4.0"
+  },
+  "private": false,
+  "files": [
+    "package.json",
+    "README*",
+    "LICENSE*",
+    "scripts"
+  ]
 }
