@@ -3,6 +3,11 @@
   "version": "0.1.2",
   "type": "module",
   "description": "Proof-path section for TOML flatfile serialization.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/computer-serialized-content-engineering-services-section.git",
+    "directory": "services/toml-services-section"
+  },
   "exports": {
     "./toml-codec": "./scripts/toml-codec.mjs",
     "./convert-toml": "./scripts/convert-toml.mjs"
