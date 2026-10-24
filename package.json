@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "smol-toml": "1.9.0",
-    "@red-cup-engineering/json-services-section": "0.4.0"
+    "@red-cup-engineering/json-engineering-services-section": "0.4.0"
   },
   "private": false,
   "files": [
