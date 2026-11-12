@@ -35,3 +35,14 @@ test("TOML 1.1 validation returns real diagnostics and JSON conversion refuses l
   assert.throws(() => validateTomlDocument({ text: '\uD800' }), TypeError);
   assert.throws(() => validateTomlDocument({ text: '', extra: true }), TypeError);
 });
+
+test("the TOML JSON source profile witnesses BOM bytes and refuses lossy values", async () => {
+  const { tomlJsonSourceCodec } = await import("@red-cup-engineering/toml-services-section/source-codec");
+  const { verifyContentAddress } = await import("@red-cup-engineering/signcell/content-address/raw");
+  const bytes = Buffer.from("\uFEFFa = 1\r\n");
+  const reading = tomlJsonSourceCodec.read(bytes);
+  assert.deepEqual(reading.value, { a: 1 });
+  assert.equal(verifyContentAddress(bytes, reading.source), true);
+  assert.deepEqual(tomlJsonSourceCodec.write(reading.value).reading.value, reading.value);
+  assert.throws(() => tomlJsonSourceCodec.read(Buffer.from("a = 1979-05-27")));
+});

@@ -1,4 +1,5 @@
 /** Bounded TOML/JSON conversions and standards diagnostics, without I/O. */
+import { encodeUtf8Source } from "@red-cup-engineering/signcell/source-codec";
 import { canonicalizeJson, JSON_RESOURCE_ENVELOPE } from "@red-cup-engineering/json-services-section/canonical-json";
 import { decodeToml, encodeToml } from "./toml-codec.mjs";
 
@@ -11,7 +12,7 @@ function request(body, key) {
 function admitTomlText(body) {
   const text = request(body, "text");
   if (typeof text !== "string" || !text.isWellFormed()) throw new TypeError("text must be well-formed Unicode TOML text");
-  if (new TextEncoder().encode(text).byteLength > LIMIT) throw new RangeError(`TOML text exceeds ${LIMIT} bytes`);
+  if (encodeUtf8Source(text).byteLength > LIMIT) throw new RangeError(`TOML text exceeds ${LIMIT} bytes`);
   return text;
 }
 export function tomlToJson(body) {
@@ -22,7 +23,7 @@ export function tomlToJson(body) {
 export function jsonToToml(body) {
   const value = canonicalizeJson(request(body, "value"), envelope).value;
   const text = encodeToml(value);
-  if (new TextEncoder().encode(text).byteLength > LIMIT) throw new RangeError(`TOML output exceeds ${LIMIT} bytes`);
+  if (encodeUtf8Source(text).byteLength > LIMIT) throw new RangeError(`TOML output exceeds ${LIMIT} bytes`);
   return { text };
 }
 export function validateTomlDocument(body) {
