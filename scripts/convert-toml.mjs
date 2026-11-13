@@ -1,6 +1,6 @@
 /** Bounded TOML/JSON conversions and standards diagnostics, without I/O. */
 import { encodeUtf8Source } from "@red-cup-engineering/signcell/source-codec";
-import { canonicalizeJson, JSON_RESOURCE_ENVELOPE } from "@red-cup-engineering/json-services-section/canonical-json";
+import { canonicalizeJson, JSON_RESOURCE_ENVELOPE } from "@red-cup-engineering/json-engineering-services-section/canonical-json";
 import { decodeToml, encodeToml } from "./toml-codec.mjs";
 
 const LIMIT = 65536;
