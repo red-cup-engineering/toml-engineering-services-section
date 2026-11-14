@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { decodeToml, encodeToml } from "../scripts/toml-codec.mjs";
-import { tomlToJson, jsonToToml, validateTomlDocument } from "../scripts/convert-toml.mjs";
+import { decodeToml, encodeToml } from "@red-cup-engineering/toml-engineering-services-section/toml-codec";
+import { tomlToJson, jsonToToml, validateTomlDocument } from "@red-cup-engineering/toml-engineering-services-section/convert-toml";
 
 test("the standards parser preserves native TOML values, nested array tables and data keys", () => {
   const source = '[[groups]]\nname="first"\n[groups.nested]\ncount=1\n[[groups]]\nname="second"\n[groups.nested]\ncount=2\n';

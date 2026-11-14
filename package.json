@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/toml-engineering-services-section",
-  "version": "0.1.4",
+  "version": "0.1.5-dev.0",
   "type": "module",
   "description": "Proof-path section for TOML flatfile serialization.",
   "repository": {
@@ -17,19 +17,24 @@
   },
   "dependencies": {
     "smol-toml": "^1.9.0",
-    "@red-cup-engineering/json-engineering-services-section": "^0.4.0",
-    "@red-cup-engineering/signcell": "^0.17.5"
+    "@red-cup-engineering/json-engineering-services-section": "0.4.3-dev.0",
+    "@red-cup-engineering/signcell": "0.17.5"
   },
   "private": false,
   "files": [
     "package.json",
     "README*",
     "LICENSE*",
-    "scripts"
+    "scripts",
+    "test"
   ],
   "license": "MIT",
   "funding": {
     "type": "individual",
     "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
-  }
+  },
+  "receivingTests": [
+    "test/toml-file-codec.test.mjs",
+    "test/toml-transformations.test.mjs"
+  ]
 }
