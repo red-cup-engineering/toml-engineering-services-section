@@ -28,3 +28,11 @@ The existing market offers these operations for $0.0001 each:
 `/v1/data/toml-validate`, `/v1/data/toml-to-json`, `/v1/data/json-to-toml`.
 Their declarations, runnable examples and native payment challenges are served
 at https://market.561.group/v1/catalog.
+
+## Native prerequisite receiving
+
+Original behavior and public consumer tests are shipped and declared as receiving tests.
+The native dependency lock uses genuine archive identities, not workspace links.
+This development cohort is a prerequisite preview: local authentic-archive
+qualification is not registry issuance or live activation, and does not clear
+held supplier integration or issuance gates.
