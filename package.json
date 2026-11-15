@@ -12,9 +12,6 @@
     "./convert-toml": "./scripts/convert-toml.mjs",
     "./source-codec": "./scripts/source-codec.mjs"
   },
-  "scripts": {
-    "test": "node --test test/*.test.mjs"
-  },
   "dependencies": {
     "smol-toml": "^1.9.0",
     "@red-cup-engineering/json-engine": "^0.5.0",
@@ -25,8 +22,7 @@
     "package.json",
     "README*",
     "LICENSE*",
-    "scripts",
-    "test"
+    "scripts"
   ],
   "license": "MIT",
   "funding": {
