@@ -1,6 +1,6 @@
 {
   "name": "@red-cup-engineering/toml-engineering-services-section",
-  "version": "0.1.7-dev.0",
+  "version": "0.1.8-dev.0",
   "type": "module",
   "description": "Proof-path section for TOML flatfile serialization.",
   "repository": {
