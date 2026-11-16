@@ -36,3 +36,14 @@ The native dependency lock uses genuine archive identities, not workspace links.
 This development cohort is a prerequisite preview: local authentic-archive
 qualification is not registry issuance or live activation, and does not clear
 held supplier integration or issuance gates.
+
+## Source-preserving root key edits
+
+The `./toml-codec` export `renameBareTomlRootKey(text, { from, to })` changes a
+single bare root assignment key without serializing other values or changing
+comments or whitespace. It verifies the new document against the original
+parser result. If the source uses a quoted or dotted key, a destination already
+exists, or a change cannot be proved, it refuses rather than rewriting the
+file. Key searching is bounded to four MiB of input and 16 candidate tokens.
+The function neither changes a file nor decides when a schema migration is
+appropriate.

@@ -1,4 +1,5 @@
 /** TOML 1.1 values ↔ text. One standards parser for files, Markdown and paid conversions. */
+import { isDeepStrictEqual } from "node:util";
 import { parse, stringify, TomlError } from "smol-toml";
 export { TomlDate } from "smol-toml";
 
@@ -71,4 +72,46 @@ export function encodeToml(table) {
   }
   inspect(table, 0);
   return stringify(table);
+}
+
+const BARE_KEY = /^[A-Za-z0-9_-]+$/u;
+const MAX_RENAME_BYTES = 4 * 1024 * 1024;
+const MAX_KEY_CANDIDATES = 16;
+
+/**
+ * Rename one bare, line-start root key without reserializing a TOML document.
+ * Use the codec to prove that the entire parsed value is unchanged apart from
+ * the supplied key. Assignments in nested tables or multiline strings cannot
+ * satisfy that proof. Quoted and dotted keys require a different edit.
+ * @param {string} text Original TOML document.
+ * @param {{from: string, to: string}} keys Distinct bare TOML keys.
+ * @returns {string} Original text with exactly one key token replaced.
+ */
+export function renameBareTomlRootKey(text, { from, to } = {}) {
+  if (typeof text !== "string" || Buffer.byteLength(text) > MAX_RENAME_BYTES)
+    throw new TypeError("root key rename requires TOML text of at most four MiB");
+  if (typeof from !== "string" || typeof to !== "string" || !BARE_KEY.test(from) || !BARE_KEY.test(to) || from === to)
+    throw new TypeError("root key rename requires two distinct bare TOML keys");
+  const original = decodeToml(text);
+  if (!Object.hasOwn(original, from)) throw new TypeError("original root key is absent");
+  if (Object.hasOwn(original, to)) throw new TypeError("destination root key already exists");
+  const expected = Object.fromEntries(Object.entries(original).map(([key, value]) => [key === from ? to : key, value]));
+  const offsets = [];
+  for (const match of text.matchAll(/^(\uFEFF?[ \t]*)([A-Za-z0-9_-]+)(?=[ \t]*=)/gmu)) {
+    if (match[2] !== from) continue;
+    if (offsets.length === MAX_KEY_CANDIDATES) throw new RangeError("too many candidate TOML key tokens");
+    offsets.push(match.index + match[1].length);
+  }
+  let result;
+  for (const offset of offsets) {
+    const candidate = text.slice(0, offset) + to + text.slice(offset + from.length);
+    let parsed;
+    try { parsed = decodeToml(candidate); }
+    catch (error) { if (error instanceof SyntaxError) continue; throw error; }
+    if (!isDeepStrictEqual(parsed, expected)) continue;
+    if (result !== undefined) throw new TypeError("more than one root key edit matches the TOML parse");
+    result = candidate;
+  }
+  if (result === undefined) throw new TypeError("no bare root key edit matches the TOML parse");
+  return result;
 }
