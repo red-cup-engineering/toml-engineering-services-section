@@ -9,14 +9,14 @@ function request(body, key) {
   if (!body || typeof body !== "object" || Array.isArray(body) || !Object.hasOwn(body, key) || Object.keys(body).some(k => k !== key)) throw new TypeError(`request requires exactly ${key}`);
   return body[key];
 }
-function validateTomlText(body) {
+function admitTomlText(body) {
   const text = request(body, "text");
   if (typeof text !== "string" || !text.isWellFormed()) throw new TypeError("text must be well-formed Unicode TOML text");
   if (encodeUtf8Source(text).byteLength > LIMIT) throw new RangeError(`TOML text exceeds ${LIMIT} bytes`);
   return text;
 }
 export function tomlToJson(body) {
-  const value = decodeToml(validateTomlText(body), { maxDepth: 64 });
+  const value = decodeToml(admitTomlText(body), { maxDepth: 64 });
   // Date, BigInt, NaN and infinity are deliberately refused, never JSON.stringify'd away.
   return { value: canonicalizeJson(value, envelope).value };
 }
@@ -27,7 +27,7 @@ export function jsonToToml(body) {
   return { text };
 }
 export function validateTomlDocument(body) {
-  const text = validateTomlText(body);
+  const text = admitTomlText(body);
   try {
     decodeToml(text, { maxDepth: 64 });
     return { valid: true, standard: "TOML1.1.0", issues: [] };
