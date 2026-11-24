@@ -1,0 +1,40 @@
+{
+  "name": "@red-cup-engineering/toml-engineering-services-section",
+  "version": "0.1.11-dev.0",
+  "type": "module",
+  "description": "Proof-path section for TOML flatfile serialization.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/red-cup-engineering/toml-engineering-services-section.git"
+  },
+  "exports": {
+    "./toml-codec": "./scripts/toml-codec.mjs",
+    "./convert-toml": "./scripts/convert-toml.mjs",
+    "./source-codec": "./scripts/source-codec.mjs"
+  },
+  "dependencies": {
+    "@red-cup-engineering/time-data-engine": "^0.1.0 || 0.1.1-dev.0",
+    "@red-cup-engineering/json-engine": "^0.5.5 || 0.5.5-dev.0",
+    "@red-cup-engineering/typed-content": "^0.1.1 || 0.1.1-dev.0"
+  },
+  "private": false,
+  "files": [
+    "package.json",
+    "README*",
+    "LICENSE*",
+    "scripts",
+    "test"
+  ],
+  "license": "MIT",
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
+  },
+  "scripts": {
+    "check": "node --check scripts/toml-codec.mjs && node --check scripts/toml-date.mjs && node --check scripts/toml-parser.mjs && node --check scripts/convert-toml.mjs && node --check scripts/source-codec.mjs",
+    "test": "node --test test/*.test.mjs"
+  },
+  "receivingTests": [
+    "test/toml-runtime.test.mjs"
+  ]
+}
