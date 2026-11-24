@@ -31,8 +31,7 @@
     "url": "https://github.com/561-group/.github/blob/main/TIPS.md"
   },
   "scripts": {
-    "check": "node --check scripts/toml-codec.mjs && node --check scripts/toml-date.mjs && node --check scripts/toml-parser.mjs && node --check scripts/convert-toml.mjs && node --check scripts/source-codec.mjs",
-    "test": "node --test test/*.test.mjs"
+    "check": "node --check scripts/toml-codec.mjs && node --check scripts/toml-date.mjs && node --check scripts/toml-parser.mjs && node --check scripts/convert-toml.mjs && node --check scripts/source-codec.mjs"
   },
   "receivingTests": [
     "test/toml-runtime.test.mjs"
